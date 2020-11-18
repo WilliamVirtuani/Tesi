@@ -18,12 +18,12 @@ int main()
   }
   int left = 0;
   int right = n-1;
-  StampaArray(A, left, right);
   int m = 0; //Variabile che memorizza la posizione iniziale del pivot
-  int pivot; //Variabile dove memorizza la posizione finale del pivot
+  int pivot = 0; //Variabile che memorizza la posizione finale del pivot
+  int pivotEntry = 0; //Variabile che memorizza il pivot
   m = ChoosePivot(A, left, right);
   pivot = ReversePartition(A, left, right, m);
-  printf("\n");
+  pivotEntry = A[pivot];
   StampaArray(A, left, right);
   return 0;
 
