@@ -5,7 +5,8 @@ int ChoosePivot(int *A, int left, int right); //Ritorna la posizione iniziale de
 int ReversePartition(int *A, int left, int right, int m); //Effettua la ripartizione dell'array e ritorna la posizione finale del pivot
 void BuildMaxHeap(int *A, int left, int right);
 void FixMaxHeap(int *A, int left, int right);
-void StampaArray (int *A, int left, int right);
+void StampaArray(int *A, int left, int right);
+int Massimo(int *A, int i, int j);
 
 int main()
 {
@@ -70,4 +71,16 @@ int ReversePartition(int *A, int left, int right, int m)
   }
   Scambia(A, right, m);
   return right;
+}
+
+int Massimo(int *A, int i, int j)
+{
+  if(A[i] >= A[j])
+  {
+    return A[i];
+  }
+  else
+  {
+    return A[j];
+  }
 }
