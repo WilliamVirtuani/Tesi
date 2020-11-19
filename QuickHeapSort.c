@@ -3,6 +3,8 @@
 void Scambia(int *A, int i, int j); //Scambia due elementi dell'array
 int ChoosePivot(int *A, int left, int right); //Ritorna la posizione iniziale del pivot
 int ReversePartition(int *A, int left, int right, int m); //Effettua la ripartizione dell'array e ritorna la posizione finale del pivot
+void BuildMaxHeap(int *A, int left, int right);
+void FixMaxHeap(int *A, int left, int right);
 void StampaArray (int *A, int left, int right);
 
 int main()
