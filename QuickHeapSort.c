@@ -3,10 +3,10 @@
 void Scambia(int *A, int i, int j); //Scambia due elementi dell'array
 int ChoosePivot(int *A, int left, int right); //Ritorna la posizione iniziale del pivot
 int ReversePartition(int *A, int left, int right, int m); //Effettua la ripartizione dell'array e ritorna la posizione finale del pivot
-void BuildMaxHeap(int *A, int left, int right);
-void FixMaxHeap(int *A, int left, int right);
+void BuildMaxHeap(int *A, int root, int right); //Costruisce una struttura Heap a partire da un albero binario completo o quasi completo
+void FixMaxHeap(int *A, int root, int right);
 void StampaArray(int *A, int left, int right);
-int Massimo(int *A, int i, int j);
+int Massimo(int *A, int i, int j); //Ritorna il massimo tra A[i] e A[j]
 
 int main()
 {
