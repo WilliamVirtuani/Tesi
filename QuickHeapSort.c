@@ -3,10 +3,12 @@
 void Scambia(int *A, int i, int j); //Scambia due elementi dell'array
 int ChoosePivot(int *A, int left, int right); //Ritorna la posizione iniziale del pivot
 int ReversePartition(int *A, int left, int right, int m); //Effettua la ripartizione dell'array e ritorna la posizione finale del pivot
-void BuildMaxHeap(int *A, int root, int right); //Costruisce una struttura Heap a partire da un albero binario completo o quasi completo
-void FixMaxHeap(int *A, int root, int right);
+void BuildMaxHeap(int *A, int root, int right, int scale); //Costruisce una struttura Heap a partire da un albero binario completo o quasi completo
+void BuildMinHeap(int *A, int root, int right, int scale);
+void FixMaxHeap(int *A, int root, int right, int scale);
+void FixMinHeap(int *A, int root, int right, int scale);
 void StampaArray(int *A, int left, int right);
-int Massimo(int *A, int i, int j); //Ritorna il massimo tra A[i] e A[j]
+
 
 int main()
 {
@@ -73,14 +75,78 @@ int ReversePartition(int *A, int left, int right, int m)
   return right;
 }
 
-int Massimo(int *A, int i, int j)
+void FixMaxHeap(int *A, int root, int right, int scale)
 {
-  if(A[i] >= A[j])
+  int max = 0;
+  int sx = 0;
+  int dx = 0;
+  int pos = 0;
+  while(root <= right-1)
   {
-    return A[i];
+    dx = ((root*2)+2)-scale;
+    sx = ((root*2)+1)-scale;
+    max = root;
+    if(dx <= right && A[dx] > A[max])
+    {
+      max = dx;
+    }
+   if(sx <= right && A[sx] > A[max])
+    {
+      max = sx;
+    }
+    if(max != root)
+    {
+      Scambia(A, root, max);
+      root = max;
+    }
+    else break;
   }
-  else
+}
+
+void FixMinHeap(int *A, int root, int right, int scale)
+{
+  int max = 0;
+  int sx = 0;
+  int dx = 0;
+  int pos = 0;
+  while(root <= right-1)
   {
-    return A[j];
+    dx = ((root*2)+2)-scale;
+    sx = ((root*2)+1)-scale;
+    max = root;
+    if(dx <= right && A[dx] < A[max])
+    {
+      max = dx;
+    }
+   if(sx <= right && A[sx] < A[max])
+    {
+      max = sx;
+    }
+    if(max != root)
+    {
+      Scambia(A, root, max);
+      root = max;
+    }
+    else break;
+  }
+}
+
+void BuildMaxHeap(int *A, int root, int right, int scale)
+{
+  int dim =(right-root)+1;
+  int start =((dim/2)-1)+root;
+  for(int i = start; i >= root; i--)
+  {
+    FixMaxHeap(A, i, right, scale);
+  }
+}
+
+void BuildMinHeap(int *A, int root, int right, int scale)
+{
+  int dim =(right-root)+1;
+  int start =((dim/2)-1)+root;
+  for(int i = start; i >= root; i--)
+  {
+    FixMinHeap(A, i, right, scale);
   }
 }
