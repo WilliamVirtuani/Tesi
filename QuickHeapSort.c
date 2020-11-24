@@ -7,32 +7,69 @@ void BuildMaxHeap(int *A, int root, int right, int scale); //Costruisce una stru
 void BuildMinHeap(int *A, int root, int right, int scale);
 void FixMaxHeap(int *A, int root, int right, int scale);
 void FixMinHeap(int *A, int root, int right, int scale);
+int SpecialMaxLeaf(int *A,int left, int right);
+int SpecialMinLeaf(int *A,int left, int right);
 void StampaArray(int *A, int left, int right);
 
 
 int main()
 {
-  int n = 0;
-  printf("Inserire dimensione dell'array: ");
+  int n = 15;
+  int l = 0;
+  /*printf("Inserire dimensione dell'array: ");
   scanf("%d", &n);
   int A[n]; //Array
   printf("Inserire elementi dell'array: ");
   for(int i = 0; i < n; i++)
   {
     scanf("%d", &A[i]);
-  }
+  } */
+  int A[] = {9, 7, 13, 2, 8, 3, 1, 4, 12, 15, 10, 5, 11, 6, 14};
   int left = 0;
   int right = n-1;
   int m = 0; //Variabile che memorizza la posizione iniziale del pivot
   int pivot = 0; //Variabile che memorizza la posizione finale del pivot
   int pivotEntry = 0; //Variabile che memorizza il pivot
+  //while(left < right)
+  //{
   m = ChoosePivot(A, left, right);
   pivot = ReversePartition(A, left, right, m);
   pivotEntry = A[pivot];
-  StampaArray(A, left, right);
+  if(pivot <= (n+1)/2)
+  {
+    BuildMaxHeap(A, left, pivot-1, left);
+    for(int j = 0; j <= (pivot-left-1); j++)
+    {
+      StampaArray(A,0,14);
+      printf("\n\n");
+      Scambia(A, right-j, left);
+      StampaArray(A,0,14);
+      printf("\n\n");
+      l = SpecialMaxLeaf(A, left, pivot-1);
+      StampaArray(A,0,14);
+      printf("\n\n");
+      Scambia(A, l, right-j-1);
+      StampaArray(A,0,14);
+      printf("\n\n");
+    }
+    Scambia(A, pivot, right-pivot);
+    right = right-(pivot-left)-1;
+  }
+/*  else
+  {
+    BuildMinHeap(A, pivot+1, right, pivot+1);
+    for(int j = 0; j <= right-pivot-1; j++)
+    {
+      Scambia(A, left+j, pivot+1);
+      l = SpecialMinLeaf(A, pivot+1,right);
+      Scambia(A, l, left+j+1);
+    }
+    Scambia(A,left-1, pivot);
+    left = left+(right-pivot)+1;
+  }
+}*/
+StampaArray(A,0,14);
   return 0;
-
-
 }
 
 
@@ -44,10 +81,12 @@ void Scambia(int *A, int i, int j)
   A[j] = buffer;
 }
 
+
 int ChoosePivot(int *A, int left, int right)
 {
   return left;
 }
+
 
 void StampaArray (int *A, int left, int right)
 {
@@ -57,11 +96,12 @@ void StampaArray (int *A, int left, int right)
   }
 }
 
+
 int ReversePartition(int *A, int left, int right, int m)
 {
   while (left < right)
   {
-    while(A[right] < A[m] && left < right)
+    while(A[right] < A[m] )
     {
       right--;
     }
@@ -69,11 +109,15 @@ int ReversePartition(int *A, int left, int right, int m)
     {
       left++;
     }
-    Scambia(A, left, right);
+    if(left < right)
+    {
+      Scambia(A, left, right);
+    }
   }
   Scambia(A, right, m);
   return right;
 }
+
 
 void FixMaxHeap(int *A, int root, int right, int scale)
 {
@@ -103,6 +147,7 @@ void FixMaxHeap(int *A, int root, int right, int scale)
   }
 }
 
+
 void FixMinHeap(int *A, int root, int right, int scale)
 {
   int max = 0;
@@ -131,6 +176,7 @@ void FixMinHeap(int *A, int root, int right, int scale)
   }
 }
 
+
 void BuildMaxHeap(int *A, int root, int right, int scale)
 {
   int dim =(right-root)+1;
@@ -141,6 +187,7 @@ void BuildMaxHeap(int *A, int root, int right, int scale)
   }
 }
 
+
 void BuildMinHeap(int *A, int root, int right, int scale)
 {
   int dim =(right-root)+1;
@@ -149,4 +196,45 @@ void BuildMinHeap(int *A, int root, int right, int scale)
   {
     FixMinHeap(A, i, right, scale);
   }
+}
+
+
+int SpecialMaxLeaf(int *A,int left, int right)
+{
+  int i = 2*left+1;
+  while(i < right)
+  {
+    if(A[i] < A[i+1])
+    {
+      i = i+1;
+    }
+    Scambia(A, (i-1)/2, i);
+    i = 2*i+1;
+  }
+  if(i == right)
+  {
+    Scambia(A, (i-1)/2, right);
+    i = 2*i+1;
+  }
+  return (i-1)/2;
+}
+int SpecialMinLeaf(int *A,int left, int right)
+{
+  int i = 2*left+1;
+  while(i < right)
+  {
+    if(A[i] > A[i+1])
+    {
+      i = i+1;
+    }
+    Scambia(A, (i-1)/2, i);
+    i = 2*i+1;
+  }
+  if(i == right)
+  {
+    Scambia(A, (i-1)/2, right);
+    i = 2*i+1;
+  }
+  return (i-1)/2;
+
 }
