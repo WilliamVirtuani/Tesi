@@ -7,14 +7,14 @@ void BuildMaxHeap(int *A, int root, int right, int scale); //Costruisce una stru
 void BuildMinHeap(int *A, int root, int right, int scale);
 void FixMaxHeap(int *A, int root, int right, int scale);
 void FixMinHeap(int *A, int root, int right, int scale);
-int SpecialMaxLeaf(int *A,int left, int right);
-int SpecialMinLeaf(int *A,int left, int right);
+int SpecialMaxLeaf(int *A,int left, int right, int scale);
+int SpecialMinLeaf(int *A,int left, int right, int scale);
 void StampaArray(int *A, int left, int n);
 
 
 int main()
 {
-  int n = 6;
+  int n = 20;
   int l = 0;
   /*printf("Inserire dimensione dell'array: ");
   scanf("%d", &n);
@@ -24,8 +24,7 @@ int main()
   {
     scanf("%d", &A[i]);
   } */
-  int buf;
-  int A[] = {785,5,12,1,4,54};
+  int A[] = {9,7,13,2,56,3,1,4,12,145,10,5,11,6,14,87,9736,76,56,635};
   int left = 0;
   int right = n-1;
   int m = 0; //Variabile che memorizza la posizione iniziale del pivot
@@ -43,7 +42,7 @@ int main()
     for(int j = 0; j <= pivot-left-1; j++)
     {
       Scambia(A, right-j, left);
-      l = SpecialMaxLeaf(A, left, pivot-1);
+      l = SpecialMaxLeaf(A, left, pivot-1,left);
       Scambia(A, l, right-j-1);
     }
     right = right-(pivot-left)-1;
@@ -55,7 +54,7 @@ int main()
     for(int j = 0; j <= right-pivot-1; j++)
     {
       Scambia(A, left+j, pivot+1);
-      l = SpecialMinLeaf(A, pivot+1,right);
+      l = SpecialMinLeaf(A, pivot+1,right,pivot+1);
       Scambia(A, l, left+j+1);
     }
     left = left+(right-pivot)+1;
@@ -192,30 +191,32 @@ void BuildMinHeap(int *A, int root, int right, int scale)
 }
 
 
-int SpecialMaxLeaf(int *A,int left, int right)
+int SpecialMaxLeaf(int *A,int left, int right, int scale)
 {
   int i = left+1;
   if(i > right)
   {
     return i-1;
   }
+
   while(i < right)
   {
     if(A[i] < A[i+1])
     {
       i = i+1;
     }
-    Scambia(A, (i-1)/2, i);
-    i = 2*i+1;
+    Scambia(A,i,(i+scale-1)/2);
+
+    i = (2*i+1)-scale;
   }
   if(i == right)
   {
-    Scambia(A, (i-1)/2, right);
-    i = 2*i+1;
+    Scambia(A, (i+scale-1)/2,i);
+    i = (2*i+1)-scale;
   }
-  return (i-1)/2;
+  return (i+scale-1)/2;
 }
-int SpecialMinLeaf(int *A,int left, int right)
+int SpecialMinLeaf(int *A,int left, int right, int scale)
 {
   int i = left+1;
   if(i > right)
@@ -228,15 +229,15 @@ int SpecialMinLeaf(int *A,int left, int right)
     {
       i = i+1;
     }
-    Scambia(A, (i-1)/2, i);
-    i = 2*i+1;
+    Scambia(A, i, (i+scale-1)/2);
+    i = (2*i+1)-scale;
   }
   if(i == right)
   {
-    Scambia(A, (i-1)/2, right);
-    i = 2*i+1;
+    Scambia(A, i, (i+scale-1)/2);
+    i = (2*i+1)-scale;
   }
 
-  return (i-1)/2;
+  return (i+scale-1)/2;
 
 }
