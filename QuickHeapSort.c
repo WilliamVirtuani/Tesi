@@ -214,6 +214,8 @@ int SpecialMaxLeaf(int *A,int left, int right, int scale)
   }
   return (i+scale-1)/2;
 }
+
+
 int SpecialMinLeaf(int *A,int left, int right, int scale)
 {
   int i = left+1;
