@@ -1,35 +1,33 @@
 #include <stdio.h>
 
-void Scambia(int *A, int i, int j); //Scambia due elementi dell'array
-int ChoosePivot(int *A, int left, int right); //Ritorna la posizione iniziale del pivot
-int ReversePartition(int *A, int left, int right, int m); //Effettua la ripartizione dell'array e ritorna la posizione finale del pivot
-void BuildMaxHeap(int *A, int root, int right, int scale); //Costruisce una struttura Heap a partire da un albero binario completo o quasi completo
-void BuildMinHeap(int *A, int root, int right, int scale);
-void FixMaxHeap(int *A, int root, int right, int scale);
-void FixMinHeap(int *A, int root, int right, int scale);
-int SpecialMaxLeaf(int *A,int left, int right, int scale);
-int SpecialMinLeaf(int *A,int left, int right, int scale);
-void StampaArray(int *A, int left, int n);
-
+void Scambia(int *A, int i, int j); // Scambia due elementi dell'array
+int ChoosePivot(int *A, int left, int right); // Ritorna la posizione iniziale del pivot
+int ReversePartition(int *A, int left, int right, int m); // Effettua la ripartizione dell'array e ritorna la posizione finale del pivot
+void BuildMaxHeap(int *A, int root, int right, int scale); // Costruisce una struttura (MAX)Heap a partire da un albero binario completo o quasi completo
+void BuildMinHeap(int *A, int root, int right, int scale); // Costruisce una struttura (MIN)Heap a partire da un albero binario completo o quasi completo
+void FixMaxHeap(int *A, int root, int right, int scale); // Risistema una struttura (MAX)Heap che non rispetta la condizione di heap sulla radice
+void FixMinHeap(int *A, int root, int right, int scale); // Risistema una struttura (MIN)Heap che non rispetta la condizione di heap sulla radice
+int SpecialMaxLeaf(int *A,int left, int right, int scale); // Ritorna la posizione della foglia più piccola in una struttura (MAX)heap
+int SpecialMinLeaf(int *A,int left, int right, int scale); // Ritorna la posizione della foglia più piccola in una struttura (MIN)heap
+void StampaArray(int *A, int left, int n); // Stampa Array
 
 int main()
 {
-  int n = 20;
+  int n = 0;
   int l = 0;
-  /*printf("Inserire dimensione dell'array: ");
+  printf("Inserire dimensione dell'array: ");
   scanf("%d", &n);
-  int A[n]; //Array
+  int A[n];
   printf("Inserire elementi dell'array: ");
   for(int i = 0; i < n; i++)
   {
     scanf("%d", &A[i]);
-  } */
-  int A[] = {9,7,13,2,56,3,1,4,12,145,10,5,11,6,14,87,9736,76,56,635};
+  }
   int left = 0;
   int right = n-1;
-  int m = 0; //Variabile che memorizza la posizione iniziale del pivot
-  int pivot = 0; //Variabile che memorizza la posizione finale del pivot
-  int pivotEntry = 0; //Variabile che memorizza il pivot
+  int m = 0; // Variabile che memorizza la posizione iniziale del pivot
+  int pivot = 0; // Variabile che memorizza la posizione finale del pivot
+  int pivotEntry = 0; // Variabile che memorizza il pivot
   while(left < right)
   {
   m = ChoosePivot(A, left, right);
@@ -239,5 +237,4 @@ int SpecialMinLeaf(int *A,int left, int right, int scale)
   }
 
   return (i+scale-1)/2;
-
 }
