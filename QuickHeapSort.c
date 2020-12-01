@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 
 void Scambia(int *A, int i, int j); // Scambia due elementi dell'array
 int ChoosePivot(int *A, int left, int right); // Ritorna la posizione iniziale del pivot
@@ -28,6 +29,7 @@ int main()
   int m = 0; // Variabile che memorizza la posizione iniziale del pivot
   int pivot = 0; // Variabile che memorizza la posizione finale del pivot
   int pivotEntry = 0; // Variabile che memorizza il pivot
+  clock_t start = clock();
   while(left < right)
   {
   m = ChoosePivot(A, left, right);
@@ -58,6 +60,8 @@ int main()
     left = left+(right-pivot)+1;
   }
 }
+clock_t end = clock();
+printf("Tempo di esecuzione =  %f secondi \n", ((double)(end - start)) / CLOCKS_PER_SEC);
 StampaArray(A,0,n);
   return 0;
 }
