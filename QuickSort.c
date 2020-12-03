@@ -5,7 +5,8 @@ void printArray(int *A, int n);
 int partition(int *A, int left, int right);
 void swap(int *A, int i, int j);
 void quickSort(int *A, int left, int right);
-
+int count = 0;
+int countComparison();
 
 
 int main()
@@ -68,8 +69,6 @@ int partition(int *A, int left, int right)
     }
   }
   swap(A, left, m);
-  printArray(A,right);
-  printf("\n");
   return left;
 }
 
