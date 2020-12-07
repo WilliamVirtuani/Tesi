@@ -12,11 +12,11 @@ void FixMinHeap(int *A, int root, int right, int scale); // Risistema una strutt
 int SpecialMaxLeaf(int *A,int left, int right, int scale); // Ritorna la posizione della foglia più piccola in una struttura (MAX)heap
 int SpecialMinLeaf(int *A,int left, int right, int scale); // Ritorna la posizione della foglia più piccola in una struttura (MIN)heap
 void StampaArray(int *A, int left, int n); // Stampa Array
-int count = 0;
+long int count = 0;
 int scambi = 0;
 int countComparison();
-#define N 1000
-int c = 0;
+#define N 100
+long int c = 0;
 
 int main()
 {
@@ -33,7 +33,7 @@ int main()
     srand(time(0));
     for(int i=0; i<n; i++)
     {
-      A[i]=1+rand()%100; //numeri casuali tra 1 e 100
+      A[i]=1+rand()%1000000; //numeri casuali tra 1 e 100
     }
   right = n-1;
   left = 0;
@@ -69,7 +69,7 @@ int main()
  }
 }
 
- printf("\nNUMERO DI CONFRONTI MEDI QUICKHEAPSORT: %d %d \n", count/N, c);
+ printf("\nNUMERO DI CONFRONTI MEDI QUICKHEAPSORT: %ld %d \n", (count/N)/n, c);
  return 0;
 }
 
