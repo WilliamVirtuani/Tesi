@@ -78,7 +78,6 @@ void Swap(int *A, int i, int j)
   buffer = A[i];
   A[i] = A[j];
   A[j] = buffer;
-  ++scambi;
 }
 
 
@@ -209,7 +208,7 @@ int SpecialMaxLeaf(int *A,int left, int right, int scale)
 
   while(i < right)
   {
-    if(A[i] < A[i+1])
+    if(!(cmp(A, i, i+1)))
     {
       i = i+1;
 
@@ -236,7 +235,7 @@ int SpecialMinLeaf(int *A,int left, int right, int scale)
   }
   while(i < right)
   {
-    if(A[i] > A[i+1])
+    if(cmp(A, i, i+1))
     {
       i = i+1;
     }
