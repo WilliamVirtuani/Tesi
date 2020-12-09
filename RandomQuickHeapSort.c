@@ -13,8 +13,8 @@ int SpecialMaxLeaf(int *A,int left, int right, int scale); // Ritorna la posizio
 int SpecialMinLeaf(int *A,int left, int right, int scale); // Ritorna la posizione della foglia più piccola in una struttura (MIN)heap
 void StampaArray(int *A, int left, int n); // Stampa Array
 int cmp(int *A, int i, int j);
-long int countComparisons = 0;
-long int countMoves = 0;
+long unsigned int countComparisons = 0;
+long unsigned int countMoves = 0;
 #define N 100
 long int c = 0;
 
@@ -70,10 +70,10 @@ int main()
  }
 }
 
- printf("\nNUMERO (NORMALIZZATO) DI CONFRONTI MEDI IN QUICKHEAPSORT: %ld\n", (countComparisons/N)/n);
- printf("\nNUMERO DI CONFRONTI MEDI IN QUICKHEAPSORT: %ld\n", (countComparisons/N));
- printf("\nNUMERO (NORMALIZZATO) DI ELEMENTI SPOSTATI IN QUICKHEAPSORT : %ld\n",(countMoves/N)/n);
- printf("\nNUMERO DI ELEMENTI SPOSTATI IN QUICKHEAPSORT : %ld\n",(countMoves/N));
+ printf("\nNUMERO (NORMALIZZATO) DI CONFRONTI MEDI IN QUICKHEAPSORT: %lu\n", (countComparisons/N)/n);
+ printf("\nNUMERO DI CONFRONTI MEDI IN QUICKHEAPSORT: %lu\n", (countComparisons/N));
+ printf("\nNUMERO (NORMALIZZATO) DI ELEMENTI SPOSTATI IN QUICKHEAPSORT : %lu\n",(countMoves/N)/n);
+ printf("\nNUMERO DI ELEMENTI SPOSTATI IN QUICKHEAPSORT : %lu\n",(countMoves/N));
  return 0;
 }
 

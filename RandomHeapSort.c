@@ -7,14 +7,14 @@ void heapify(int *A, int root, int n);
 void heapSort(int *A, int n);
 void printArray(int *A, int n);
 int cmp(int *A, int i, int j);
-long int countComparisons = 0;
-long int countMoves = 0;
+long unsigned int countComparisons = 0;
+long unsigned int countMoves = 0;
 #define N 100
 long int c = 0;
 
 int main()
 {
-  int n = 1000;
+  int n = 1000000;
   int A[n];
   int left = 0;
         /*inizializzamo il generatore sull'ora attuale
@@ -31,10 +31,10 @@ int main()
       c++;
     }
 
-  printf("\nNUMERO (NORMALIZZATO) DI CONFRONTI MEDI HEAPSORT: %ld \n", (countComparisons/N)/n);
-  printf("\nNUMERO DI CONFRONTI MEDI HEAPSORT: %ld \n", (countComparisons/N));
-  printf("\nNUMERO (NORMALIZZATO) DI SPOSTAMENTI MEDI HEAPSORT: %ld \n", (countMoves/N)/n);
-  printf("\nNUMERO DI SPOSTAMENTI MEDI HEAPSORT: %ld \n", (countMoves/N));
+  printf("\nNUMERO (NORMALIZZATO) DI CONFRONTI MEDI HEAPSORT: %lu \n", (countComparisons/N)/n);
+  printf("\nNUMERO DI CONFRONTI MEDI HEAPSORT: %lu \n", (countComparisons/N));
+  printf("\nNUMERO (NORMALIZZATO) DI SPOSTAMENTI MEDI HEAPSORT: %lu \n", (countMoves/N)/n);
+  printf("\nNUMERO DI SPOSTAMENTI MEDI HEAPSORT: %lu \n", (countMoves/N));
   return 0;
 }
 
