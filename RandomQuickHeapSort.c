@@ -20,7 +20,7 @@ long int c = 0;
 
 int main()
 {
-  int n = 1000;
+  int n = 1000000;
   int l = 0;
   int left = 0;
   int right = n-1;
@@ -215,7 +215,7 @@ int SpecialMaxLeaf(int *A,int left, int right, int scale)
 
   while(i < right)
   {
-    if(A[i] < A[i+1])
+    if(!(cmp(A, i, i+1)))
     {
       i = i+1;
 
@@ -242,7 +242,7 @@ int SpecialMinLeaf(int *A,int left, int right, int scale)
   }
   while(i < right)
   {
-    if(A[i] > A[i+1])
+    if(cmp(A, i, i+1))
     {
       i = i+1;
     }
