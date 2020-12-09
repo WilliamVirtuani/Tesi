@@ -6,7 +6,7 @@ void printArray(int *A, int n);
 int partition(int *A, int left, int right);
 void swap(int *A, int i, int j);
 void quickSort(int *A, int left, int right);
-int count = 0;
+long unsigned int countComparisons = 0;
 int cmp(int *A, int i, int j);
 int scambi = 0;
 #define N 100
@@ -36,7 +36,7 @@ int main()
        quickSort(A, left, right);
        clock_t end = clock();
      }
-  printf("\nNUMERO DI CONFRONTI QUICKSORT: %d \n ", count/N);
+  printf("\nNUMERO DI CONFRONTI QUICKSORT: %lu \n ", countComparisons/N);
   return 0;
 }
 
@@ -97,7 +97,7 @@ void quickSort(int *A, int left, int right)
 
 int cmp(int *A, int i, int j)
 {
-  ++count;
+  ++countComparisons;
   if (A[i] >= A[j])
   {
     return 1;

@@ -44,9 +44,9 @@ int main()
     A[pivot] = A[right];
     for(int j = 0; j <= pivot-left-1; j++)
     {
-      Swap(A, right-j, left);
+      A[right-j] = A[left];
       l = SpecialMaxLeaf(A, left, pivot-1,left);
-      Swap(A, l, right-j-1);
+      A[l]=A[right-j-1];
     }
     right = right-(pivot-left)-1;
     A[right+1] = pivotEntry;
@@ -54,14 +54,15 @@ int main()
   else
   {
     BuildMinHeap(A, pivot+1, right, pivot+1);
-    Swap(A,pivot,left);
+    A[pivot] = A[left];
     for(int j = 0; j <= right-pivot-1; j++)
     {
-      Swap(A, left+j, pivot+1);
+      A[left+j] = A[pivot+1];
       l = SpecialMinLeaf(A, pivot+1,right,pivot+1);
-      Swap(A, l, left+j+1);
+      A[l] = A[left+j+1];
     }
     left = left+(right-pivot)+1;
+    A[left - 1] = pivotEntry;
   }
  }
  clock_t end = clock();
