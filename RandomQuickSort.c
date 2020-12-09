@@ -7,31 +7,36 @@ int partition(int *A, int left, int right);
 void swap(int *A, int i, int j);
 void quickSort(int *A, int left, int right);
 int count = 0;
-int countComparison();
+int cmp(int *A, int i, int j);
 int scambi = 0;
-
+#define N 100
+int c = 0;
 
 int main()
 {
-  int n = 1000;
+  int n = 100;
   int A[n];
+  int left = 0;
+  int right = n-1;
         /*inizializzamo il generatore sull'ora attuale
         dell'elaboratore time(0), in questo modo si hanno
         valori diversi*/
-	srand(time(0));
+  while(c < N)
+  {
+     ++c;
+	   srand(time(0));
 
-	for(int i=0;i<n;i++){
-	   A[i]=1+rand()%1000; //numeri casuali tra 1 e 100
-  }
+	    for(int i=0;i<n;i++){
+	       A[i]=1+rand()%n; //numeri casuali tra 1 e 100
+       }
 
-  int left = 0;
-  int right = n-1;
-  clock_t start = clock();
-  quickSort(A, left, right);
-  clock_t end = clock();
-  printf("TEMPO DI ESECUZIONE QUICKSORT =  %f secondi \n", ((double)(end - start)) / CLOCKS_PER_SEC);
-  printArray(A,n);
-  printf("\nNUMERO DI CONFRONTI QUICKSORT: %d \n ", count);
+       left = 0;
+       right = n-1;
+       clock_t start = clock();
+       quickSort(A, left, right);
+       clock_t end = clock();
+     }
+  printf("\nNUMERO DI CONFRONTI QUICKSORT: %d \n ", count/N);
   return 0;
 }
 
@@ -62,15 +67,13 @@ int partition(int *A, int left, int right)
   int pivot = A[m]; // salvo il valore del pivot
   while(left < right)
   {
-    while(A[right] >= A[m] && left < right)
+    while(cmp(A, right, m) && left < right)
     {
       right --;
-      ++count;
     }
-    while(A[left] < A[m])
+    while(!(cmp(A, left, m)))
     {
       left ++;
-      ++count;
     }
     if(left < right)
     {
@@ -92,8 +95,15 @@ void quickSort(int *A, int left, int right)
   }
 }
 
-int countComparison()
+int cmp(int *A, int i, int j)
 {
   ++count;
-  return 1;
+  if (A[i] >= A[j])
+  {
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
 }

@@ -11,6 +11,9 @@ void FixMinHeap(int *A, int root, int right, int scale); // Risistema una strutt
 int SpecialMaxLeaf(int *A,int left, int right, int scale); // Ritorna la posizione della foglia più piccola in una struttura (MAX)heap
 int SpecialMinLeaf(int *A,int left, int right, int scale); // Ritorna la posizione della foglia più piccola in una struttura (MIN)heap
 void StampaArray(int *A, int left, int n); // Stampa Array
+int cmp(int *A, int i, int j);
+int countComparisons = 0;
+int scambi = 0;
 
 int main()
 {
@@ -38,7 +41,7 @@ int main()
   if(right+left > 2*pivot)
   {
     BuildMaxHeap(A, left, pivot-1, left);
-    Swap(A,pivot,right);
+    A[pivot] = A[right];
     for(int j = 0; j <= pivot-left-1; j++)
     {
       Swap(A, right-j, left);
@@ -46,6 +49,7 @@ int main()
       Swap(A, l, right-j-1);
     }
     right = right-(pivot-left)-1;
+    A[right+1] = pivotEntry;
   }
   else
   {
@@ -59,11 +63,12 @@ int main()
     }
     left = left+(right-pivot)+1;
   }
-}
-clock_t end = clock();
-printf("Tempo di esecuzione =  %f secondi \n", ((double)(end - start)) / CLOCKS_PER_SEC);
-StampaArray(A,0,n);
-  return 0;
+ }
+ clock_t end = clock();
+ printf("TEMPO DI ESECUZIONE QUICKHEAPSORT =  %f secondi \n", ((double)(end - start)) / CLOCKS_PER_SEC);
+ StampaArray(A,0,n);
+ printf("\nNUMERO DI CONFRONTI QUICKHEAPSORT: %d \n", countComparisons);
+ return 0;
 }
 
 
@@ -73,6 +78,7 @@ void Swap(int *A, int i, int j)
   buffer = A[i];
   A[i] = A[j];
   A[j] = buffer;
+  ++scambi;
 }
 
 
@@ -95,11 +101,11 @@ int ReversePartition(int *A, int left, int right, int m)
 {
   while (left < right)
   {
-    while(A[right] <= A[m])
+    while(!(cmp(A, right, m)))
     {
       right--;
     }
-    while(A[left] >= A[m] && left < right)
+    while(cmp(A, left, m) && left < right)
     {
       left++;
     }
@@ -124,11 +130,11 @@ void FixMaxHeap(int *A, int root, int right, int scale)
     dx = ((root*2)+2)-scale;
     sx = ((root*2)+1)-scale;
     max = root;
-    if(dx <= right && A[dx] > A[max])
+    if(dx <= right && cmp(A, dx, max))
     {
       max = dx;
     }
-   if(sx <= right && A[sx] > A[max])
+   if(sx <= right && cmp(A, sx, max))
     {
       max = sx;
     }
@@ -153,11 +159,11 @@ void FixMinHeap(int *A, int root, int right, int scale)
     dx = ((root*2)+2)-scale;
     sx = ((root*2)+1)-scale;
     max = root;
-    if(dx <= right && A[dx] < A[max])
+    if(dx <= right && !(cmp(A, dx, max)))
     {
       max = dx;
     }
-   if(sx <= right && A[sx] < A[max])
+   if(sx <= right && !(cmp(A, sx, max)))
     {
       max = sx;
     }
@@ -206,6 +212,7 @@ int SpecialMaxLeaf(int *A,int left, int right, int scale)
     if(A[i] < A[i+1])
     {
       i = i+1;
+
     }
     Swap(A,i,(i+scale-1)/2);
 
@@ -243,4 +250,17 @@ int SpecialMinLeaf(int *A,int left, int right, int scale)
   }
 
   return (i+scale-1)/2;
+}
+
+int cmp(int *A, int i, int j)
+{
+  ++countComparisons;
+  if (A[i] >= A[j])
+  {
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
 }

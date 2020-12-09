@@ -12,9 +12,9 @@ void FixMinHeap(int *A, int root, int right, int scale); // Risistema una strutt
 int SpecialMaxLeaf(int *A,int left, int right, int scale); // Ritorna la posizione della foglia più piccola in una struttura (MAX)heap
 int SpecialMinLeaf(int *A,int left, int right, int scale); // Ritorna la posizione della foglia più piccola in una struttura (MIN)heap
 void StampaArray(int *A, int left, int n); // Stampa Array
-long int count = 0;
-int scambi = 0;
-int countComparison();
+int cmp(int *A, int i, int j);
+long int countComparisons = 0;
+long int countMoves = 0;
 #define N 100
 long int c = 0;
 
@@ -33,7 +33,7 @@ int main()
     srand(time(0));
     for(int i=0; i<n; i++)
     {
-      A[i]=1+rand()%1000000; //numeri casuali tra 1 e 100
+      A[i]=1+rand()%n; //numeri casuali tra 1 ed n
     }
   right = n-1;
   left = 0;
@@ -45,7 +45,7 @@ int main()
   if(right+left > 2*pivot)
   {
     BuildMaxHeap(A, left, pivot-1, left);
-    Swap(A,pivot,right);
+    A[pivot] = A[right];
     for(int j = 0; j <= pivot-left-1; j++)
     {
       Swap(A, right-j, left);
@@ -53,6 +53,7 @@ int main()
       Swap(A, l, right-j-1);
     }
     right = right-(pivot-left)-1;
+    A[right+1] = pivotEntry;
   }
   else
   {
@@ -69,7 +70,10 @@ int main()
  }
 }
 
- printf("\nNUMERO DI CONFRONTI MEDI QUICKHEAPSORT: %ld %d \n", (count/N)/n, c);
+ printf("\nNUMERO (NORMALIZZATO) DI CONFRONTI MEDI IN QUICKHEAPSORT: %ld\n", (countComparisons/N)/n);
+ printf("\nNUMERO DI CONFRONTI MEDI IN QUICKHEAPSORT: %ld\n", (countComparisons/N));
+ printf("\nNUMERO (NORMALIZZATO) DI ELEMENTI SPOSTATI IN QUICKHEAPSORT : %ld\n",(countMoves/N)/n);
+ printf("\nNUMERO DI ELEMENTI SPOSTATI IN QUICKHEAPSORT : %ld\n",(countMoves/N));
  return 0;
 }
 
@@ -80,7 +84,7 @@ void Swap(int *A, int i, int j)
   buffer = A[i];
   A[i] = A[j];
   A[j] = buffer;
-  ++scambi;
+  ++countMoves;
 }
 
 
@@ -103,15 +107,13 @@ int ReversePartition(int *A, int left, int right, int m)
 {
   while (left < right)
   {
-    while(A[right] <= A[m])
+    while(!(cmp(A, right, m)))
     {
       right--;
-      count++;
     }
-    while(A[left] >= A[m] && left < right)
+    while(cmp(A, left, m) && left < right)
     {
       left++;
-      count++;
     }
     if(left < right)
     {
@@ -134,15 +136,13 @@ void FixMaxHeap(int *A, int root, int right, int scale)
     dx = ((root*2)+2)-scale;
     sx = ((root*2)+1)-scale;
     max = root;
-    if(dx <= right && A[dx] > A[max])
+    if(dx <= right && cmp(A, dx, max))
     {
       max = dx;
-      ++count;
     }
-   if(sx <= right && A[sx] > A[max])
+   if(sx <= right && cmp(A, sx, max))
     {
       max = sx;
-      ++count;
     }
     if(max != root)
     {
@@ -165,15 +165,13 @@ void FixMinHeap(int *A, int root, int right, int scale)
     dx = ((root*2)+2)-scale;
     sx = ((root*2)+1)-scale;
     max = root;
-    if(dx <= right && A[dx] < A[max])
+    if(dx <= right && !(cmp(A, dx, max)))
     {
       max = dx;
-      ++count;
     }
-   if(sx <= right && A[sx] < A[max])
+   if(sx <= right && !(cmp(A, sx, max)))
     {
       max = sx;
-      ++count;
     }
     if(max != root)
     {
@@ -220,7 +218,7 @@ int SpecialMaxLeaf(int *A,int left, int right, int scale)
     if(A[i] < A[i+1])
     {
       i = i+1;
-      ++count;
+
     }
     Swap(A,i,(i+scale-1)/2);
 
@@ -247,7 +245,6 @@ int SpecialMinLeaf(int *A,int left, int right, int scale)
     if(A[i] > A[i+1])
     {
       i = i+1;
-      ++count;
     }
     Swap(A, i, (i+scale-1)/2);
     i = (2*i+1)-scale;
@@ -261,8 +258,15 @@ int SpecialMinLeaf(int *A,int left, int right, int scale)
   return (i+scale-1)/2;
 }
 
-int countComparison()
+int cmp(int *A, int i, int j)
 {
-  ++count;
-  return 1;
+  ++countComparisons;
+  if (A[i] >= A[j])
+  {
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
 }

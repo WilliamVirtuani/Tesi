@@ -7,6 +7,9 @@ void swap(int *A, int i, int j);
 void quickSort(int *A, int left, int right);
 int count = 0;
 int countComparison();
+int scambi = 0;
+int cmp(int *A, int i, int j);
+int cmp2(int *A, int i, int j);
 
 
 int main()
@@ -24,8 +27,9 @@ int main()
   clock_t start = clock();
   quickSort(A, left, right);
   clock_t end = clock();
-  printf("Tempo di esecuzione =  %f secondi \n", ((double)(end - start)) / CLOCKS_PER_SEC);
+  printf("TEMPO DI ESECUZIONE QUICKSORT =  %f secondi \n", ((double)(end - start)) / CLOCKS_PER_SEC);
   printArray(A,n);
+  printf("\nNUMERO DI CONFRONTI QUICKSORT: %d \n ", count);
   return 0;
 }
 
@@ -46,6 +50,7 @@ void swap(int *A, int i, int j)
   buffer = A[i];
   A[i] = A[j];
   A[j] = buffer;
+  ++scambi;
 }
 
 
@@ -55,11 +60,11 @@ int partition(int *A, int left, int right)
   int pivot = A[m]; // salvo il valore del pivot
   while(left < right)
   {
-    while(A[right] >= A[m] && left < right)
+    while(cmp(A, right, m) && left < right)
     {
       right --;
     }
-    while(A[left] < A[m])
+    while(!(cmp(A, left, m)))
     {
       left ++;
     }
@@ -78,7 +83,20 @@ void quickSort(int *A, int left, int right)
   if(left < right)
   {
     m = partition(A, left, right);
-    quickSort(A, left, m-1);
+    quickSort(A, left, m);
     quickSort(A, m+1, right);
+  }
+}
+
+int cmp(int *A, int i, int j)
+{
+  ++count;
+  if (A[i] >= A[j])
+  {
+    return 1;
+  }
+  else
+  {
+    return 0;
   }
 }

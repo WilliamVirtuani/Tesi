@@ -6,8 +6,9 @@ void swap(int *A, int i, int j);
 void heapify(int *A, int root, int n);
 void heapSort(int *A, int n);
 void printArray(int *A, int n);
-long int count = 0;
-int countComparison();
+int cmp(int *A, int i, int j);
+long int countComparisons = 0;
+long int countMoves = 0;
 #define N 100
 long int c = 0;
 
@@ -24,15 +25,16 @@ int main()
     srand(time(0));
 	   for(int i=0;i<n;i++)
      {
-	      A[i]=1+rand()%100000; //numeri casuali tra 1 e 100
+	      A[i]=1+rand()%n; //numeri casuali tra 1 ed n
       }
-
-
       heapSort(A,n);
       c++;
     }
 
-  printf("\nNUMERO DI CONFRONTI MEDI HEAPSORT: %ld \n", (count/N)/n);
+  printf("\nNUMERO (NORMALIZZATO) DI CONFRONTI MEDI HEAPSORT: %ld \n", (countComparisons/N)/n);
+  printf("\nNUMERO DI CONFRONTI MEDI HEAPSORT: %ld \n", (countComparisons/N));
+  printf("\nNUMERO (NORMALIZZATO) DI SPOSTAMENTI MEDI HEAPSORT: %ld \n", (countMoves/N)/n);
+  printf("\nNUMERO DI SPOSTAMENTI MEDI HEAPSORT: %ld \n", (countMoves/N));
   return 0;
 }
 
@@ -43,6 +45,7 @@ void swap(int *A, int i, int j)
   buffer = A[i];
   A[i] = A[j];
   A[j] = buffer;
+  ++countMoves;
 }
 
 void printArray(int *A, int n)
@@ -59,15 +62,13 @@ void heapify(int *A, int root, int n)
   int minimum = root;
   int l = 2*root+1;
   int r = 2*root+2;
-  if(l < n && A[l] > A[minimum])
+  if(l < n && cmp(A, l, minimum))
   {
     minimum = l;
-    ++count;
   }
-  if(r < n && A[r] > A[minimum])
+  if(r < n && cmp(A, r, minimum))
   {
     minimum = r;
-    ++count;
   }
   if(minimum != root)
   {
@@ -89,8 +90,15 @@ void heapSort(int *A, int n)
   }
 }
 
-int countComparison()
+int cmp(int *A, int i, int j)
 {
-  ++count;
-  return 1;
+  ++countComparisons;
+  if (A[i] >= A[j])
+  {
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
 }
