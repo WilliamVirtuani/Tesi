@@ -14,7 +14,7 @@ long int c = 0;
 
 int main()
 {
-  int n = 100000;
+  int n = 1000000;
   int A[n];
   int left = 0;
         /*inizializzamo il generatore sull'ora attuale

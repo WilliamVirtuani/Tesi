@@ -70,11 +70,12 @@ int main()
   }
  }
 }
-
- printf("\nNUMERO (NORMALIZZATO) DI CONFRONTI MEDI IN QUICKHEAPSORT: %lu\n", (countComparisons/N)/n);
- printf("\nNUMERO DI CONFRONTI MEDI IN QUICKHEAPSORT: %lu\n", (countComparisons/N));
- printf("\nNUMERO (NORMALIZZATO) DI ELEMENTI SPOSTATI IN QUICKHEAPSORT : %lu\n",(countMoves/N)/n);
- printf("\nNUMERO DI SPOSTAMENTI MEDI IN QUICKHEAPSORT : %lu\n",(countMoves/N));
+  printf("\nNUMERO DI CONFRONTI QUICKHEAPSORT: %lu \n", countComparisons);
+  printf("\nNUMERO DI CONFRONTI MEDI QUICKHEAPSORT: %lu \n", (countComparisons/N));
+  printf("\nNUMERO (NORMALIZZATO) DI CONFRONTI MEDI QUICKHEAPSORT: %lu \n", (countComparisons/N)/n);
+  printf("\nNUMERO DI SPOSTAMENTI QUICKHEAPSORT: %lu \n", countComparisons);
+  printf("\nNUMERO DI SPOSTAMENTI MEDI QUICKHEAPSORT: %lu \n", (countMoves/N));
+  printf("\nNUMERO (NORMALIZZATO) DI SPOSTAMENTI MEDI QUICKHEAPSORT: %lu \n", (countMoves/N)/n);
  return 0;
 }
 
