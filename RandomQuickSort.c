@@ -2,16 +2,17 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define N 100
+#define N 1
 int c = 0;
 long unsigned int countComparisons = 0;
 long unsigned int countMoves = 0;
 void swap(int *A, int i, int j);
 int cmp(int *A, int i, int j);
+int partition(int *A, int low, int high);
 void quicksort(int *A, int low, int high);
 int main()
 {
-  int n = 100000000;
+  int n = 10;
   int *A = calloc(n,sizeof(int));
   while(c < N)
   {
@@ -29,30 +30,20 @@ int main()
   printf("\nNUMERO DI SPOSTAMENTI QUICKSORT: %lu \n", countComparisons);
   printf("\nNUMERO DI SPOSTAMENTI MEDI QUICKSORT: %lu \n", (countMoves/N));
   printf("\nNUMERO (NORMALIZZATO) DI SPOSTAMENTI MEDI QUICKSORT: %lu \n", (countMoves/N)/n);
+  for(int i = 0; i < n; i++)
+  {
+    printf("%d\t", A[i]);
+  }
   return 0;
+
 }
 void quicksort(int *A, int low, int high)
 {
-  int pivot, i, j;
+  int pivot;
   if(low < high) {
-    pivot = low;
-    i = low;
-    j = high;
-    while(i < j) {
-
-      while(cmp(A,i,pivot) && i <= high)
-        i++;
-
-      while(!(cmp(A,j,pivot) && j >= low))
-        j--;
-
-      if(i < j) {
-        swap(A, i, j);
-      }
-    }
-    swap(A, j, pivot);
-    quicksort(A, low, j-1);
-    quicksort(A, j+1, high);
+    pivot = partition(A, low, high);
+    quicksort(A, low, pivot-1);
+    quicksort(A, pivot+1, high);
   }
 }
 
@@ -77,3 +68,27 @@ void swap(int *A, int i, int j)
   A[j] = buffer;
   ++countMoves;
 }
+
+int partition(int *A, int low, int high)
+{
+  int pivot, i, j;
+  if(low < high) {
+    pivot = low;
+    i = low;
+    j = high;
+    while(i < j) {
+
+      while(cmp(A,i,pivot) && i <= high)
+        i++;
+
+      while(!(cmp(A,j,pivot) && j >= low))
+        j--;
+
+      if(i < j) {
+        swap(A, i, j);
+      }
+    }
+    swap(A, j, pivot);
+  }
+    return j;
+  }
