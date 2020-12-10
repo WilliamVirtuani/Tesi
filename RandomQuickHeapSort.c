@@ -20,14 +20,14 @@ long int c = 0;
 
 int main()
 {
-  int n = 100000;
+  int n = 100000000;
+  int *A = calloc(n,sizeof(n));
   int l = 0;
   int left = 0;
   int right = n-1;
   int m = 0; // Variabile che memorizza la posizione iniziale del pivot
   int pivot = 0; // Variabile che memorizza la posizione finale del pivot
   int pivotEntry = 0; // Variabile che memorizza il pivot
-  int A[n];
   while(c < N){
     c++;
     srand(time(0));

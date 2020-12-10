@@ -14,8 +14,8 @@ long int c = 0;
 
 int main()
 {
-  int n = 1000000;
-  int A[n];
+  int n = 100000000;
+  int *A = calloc(n,sizeof(int));
   int left = 0;
         /*inizializzamo il generatore sull'ora attuale
         dell'elaboratore time(0), in questo modo si hanno
@@ -30,11 +30,12 @@ int main()
       heapSort(A,n);
       c++;
     }
-
-  printf("\nNUMERO (NORMALIZZATO) DI CONFRONTI MEDI HEAPSORT: %lu \n", (countComparisons/N)/n);
-  printf("\nNUMERO DI CONFRONTI MEDI HEAPSORT: %lu \n", (countComparisons/N));
-  printf("\nNUMERO (NORMALIZZATO) DI SPOSTAMENTI MEDI HEAPSORT: %lu \n", (countMoves/N)/n);
-  printf("\nNUMERO DI SPOSTAMENTI MEDI HEAPSORT: %lu \n", (countMoves/N));
+    printf("\nNUMERO DI CONFRONTI HEAPSORT: %lu \n", countComparisons);
+    printf("\nNUMERO DI CONFRONTI MEDI HEAPSORT: %lu \n", (countComparisons/N));
+    printf("\nNUMERO (NORMALIZZATO) DI CONFRONTI MEDI HEAPSORT: %lu \n", (countComparisons/N)/n);
+    printf("\nNUMERO DI SPOSTAMENTI HEAPSORT: %lu \n", countComparisons);
+    printf("\nNUMERO DI SPOSTAMENTI MEDI HEAPSORT: %lu \n", (countMoves/N));
+    printf("\nNUMERO (NORMALIZZATO) DI SPOSTAMENTI MEDI HEAPSORT: %lu \n", (countMoves/N)/n);
   return 0;
 }
 
