@@ -5,12 +5,9 @@ void printArray(int *A, int n);
 int partition(int *A, int left, int right);
 void swap(int *A, int i, int j);
 void quickSort(int *A, int left, int right);
-int count = 0;
-int countComparison();
+long unsigned int count = 0;
 int scambi = 0;
 int cmp(int *A, int i, int j);
-int cmp2(int *A, int i, int j);
-
 
 int main()
 {
@@ -29,7 +26,7 @@ int main()
   clock_t end = clock();
   printf("TEMPO DI ESECUZIONE QUICKSORT =  %f secondi \n", ((double)(end - start)) / CLOCKS_PER_SEC);
   printArray(A,n);
-  printf("\nNUMERO DI CONFRONTI QUICKSORT: %d \n ", count);
+  printf("\nNUMERO DI CONFRONTI QUICKSORT: %ld \n ", count);
   return 0;
 }
 
