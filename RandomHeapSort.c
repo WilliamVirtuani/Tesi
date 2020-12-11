@@ -14,12 +14,10 @@ long int c = 0;
 
 int main()
 {
-  int n = 100000000;
+  int n = 1000;
   int *A = calloc(n,sizeof(int));
   int left = 0;
-        /*inizializzamo il generatore sull'ora attuale
-        dell'elaboratore time(0), in questo modo si hanno
-        valori diversi*/
+  clock_t start = clock();
   while(c < N)
   {
     srand(time(0));
@@ -30,13 +28,16 @@ int main()
       heapSort(A,n);
       c++;
     }
+    clock_t end = clock();
+
     printf("\nNUMERO DI CONFRONTI HEAPSORT: %lu \n", countComparisons);
-    printf("\nNUMERO DI CONFRONTI MEDI HEAPSORT: %lu \n", (countComparisons/N));
-    printf("\nNUMERO (NORMALIZZATO) DI CONFRONTI MEDI HEAPSORT: %lu \n", (countComparisons/N)/n);
+    printf("\nNUMERO DI CONFRONTI MEDIO HEAPSORT: %lu \n", (countComparisons/N));
+    printf("\nNUMERO (NORMALIZZATO) DI CONFRONTI MEDIO HEAPSORT: %lu \n", (countComparisons/N)/n);
     printf("\nNUMERO DI SPOSTAMENTI HEAPSORT: %lu \n", countComparisons);
-    printf("\nNUMERO DI SPOSTAMENTI MEDI HEAPSORT: %lu \n", (countMoves/N));
-    printf("\nNUMERO (NORMALIZZATO) DI SPOSTAMENTI MEDI HEAPSORT: %lu \n", (countMoves/N)/n);
-  return 0;
+    printf("\nNUMERO DI SPOSTAMENTI MEDIO HEAPSORT: %lu \n", (countMoves/N));
+    printf("\nNUMERO (NORMALIZZATO) DI SPOSTAMENTI MEDIO HEAPSORT: %lu \n", (countMoves/N)/n);
+    printf("\nTEMPO DI ESECUZIONE HEAPSORT =  %f secondi \n\n", ((double)(end - start)) / CLOCKS_PER_SEC);
+    return 0;
 }
 
 

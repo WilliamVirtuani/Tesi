@@ -2,7 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define N 1
+#define N 100
 int c = 0;
 long unsigned int countComparisons = 0;
 long unsigned int countMoves = 0;
@@ -12,31 +12,32 @@ int partition(int *A, int low, int high);
 void quicksort(int *A, int low, int high);
 int main()
 {
-  int n = 10;
+  int n = 1000;
   int *A = calloc(n,sizeof(int));
+  clock_t start = clock();
   while(c < N)
   {
     ++c;
     srand(time(0));
     for(int i=0;i<n;i++)
     {
-      A[i]=1+rand()%n; //numeri casuali tra 1 e 100
+      A[i]=1+rand()%n; //numeri casuali tra 1 e n
     }
   quicksort(A, 0, n-1);
 }
-  printf("\nNUMERO DI CONFRONTI QUICKSORT: %lu \n", countComparisons);
-  printf("\nNUMERO DI CONFRONTI MEDI QUICKSORT: %lu \n", (countComparisons/N));
-  printf("\nNUMERO (NORMALIZZATO) DI CONFRONTI MEDI QUICKSORT: %lu \n", (countComparisons/N)/n);
-  printf("\nNUMERO DI SPOSTAMENTI QUICKSORT: %lu \n", countComparisons);
-  printf("\nNUMERO DI SPOSTAMENTI MEDI QUICKSORT: %lu \n", (countMoves/N));
-  printf("\nNUMERO (NORMALIZZATO) DI SPOSTAMENTI MEDI QUICKSORT: %lu \n", (countMoves/N)/n);
-  for(int i = 0; i < n; i++)
-  {
-    printf("%d\t", A[i]);
-  }
-  return 0;
+  clock_t end = clock();
 
+  printf("\nNUMERO DI CONFRONTI QUICKSORT: %lu \n", countComparisons);
+  printf("\nNUMERO DI CONFRONTI MEDIO QUICKSORT: %lu \n", (countComparisons/N));
+  printf("\nNUMERO (NORMALIZZATO) DI CONFRONTI MEDIO QUICKSORT: %lu \n", (countComparisons/N)/n);
+  printf("\nNUMERO DI SPOSTAMENTI QUICKSORT: %lu \n", countComparisons);
+  printf("\nNUMERO DI SPOSTAMENTI MEDIO QUICKSORT: %lu \n", (countMoves/N));
+  printf("\nNUMERO (NORMALIZZATO) DI SPOSTAMENTI MEDIO QUICKSORT: %lu \n", (countMoves/N)/n);
+  printf("\nTEMPO DI ESECUZIONE QUICKSORT =  %f secondi \n\n", ((double)(end - start)) / CLOCKS_PER_SEC);
+  return 0;
 }
+
+
 void quicksort(int *A, int low, int high)
 {
   int pivot;

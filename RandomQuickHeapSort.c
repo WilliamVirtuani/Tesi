@@ -20,7 +20,7 @@ long int c = 0;
 
 int main()
 {
-  int n = 100000000;
+  int n = 1000;
   int *A = calloc(n,sizeof(n));
   int l = 0;
   int left = 0;
@@ -28,6 +28,7 @@ int main()
   int m = 0; // Variabile che memorizza la posizione iniziale del pivot
   int pivot = 0; // Variabile che memorizza la posizione finale del pivot
   int pivotEntry = 0; // Variabile che memorizza il pivot
+  clock_t start = clock();
   while(c < N){
     c++;
     srand(time(0));
@@ -70,13 +71,15 @@ int main()
   }
  }
 }
+  clock_t end = clock();
   printf("\nNUMERO DI CONFRONTI QUICKHEAPSORT: %lu \n", countComparisons);
-  printf("\nNUMERO DI CONFRONTI MEDI QUICKHEAPSORT: %lu \n", (countComparisons/N));
-  printf("\nNUMERO (NORMALIZZATO) DI CONFRONTI MEDI QUICKHEAPSORT: %lu \n", (countComparisons/N)/n);
+  printf("\nNUMERO DI CONFRONTI MEDIO QUICKHEAPSORT: %lu \n", (countComparisons/N));
+  printf("\nNUMERO (NORMALIZZATO) DI CONFRONTI MEDIO QUICKHEAPSORT: %lu \n", (countComparisons/N)/n);
   printf("\nNUMERO DI SPOSTAMENTI QUICKHEAPSORT: %lu \n", countComparisons);
-  printf("\nNUMERO DI SPOSTAMENTI MEDI QUICKHEAPSORT: %lu \n", (countMoves/N));
-  printf("\nNUMERO (NORMALIZZATO) DI SPOSTAMENTI MEDI QUICKHEAPSORT: %lu \n", (countMoves/N)/n);
- return 0;
+  printf("\nNUMERO DI SPOSTAMENTI MEDIO QUICKHEAPSORT: %lu \n", (countMoves/N));
+  printf("\nNUMERO (NORMALIZZATO) DI SPOSTAMENTI MEDIO QUICKHEAPSORT: %lu \n", (countMoves/N)/n);
+  printf("\nTEMPO DI ESECUZIONE QUICKHEAPSORT =  %f secondi \n\n", ((double)(end - start)) / CLOCKS_PER_SEC);
+  return 0;
 }
 
 
