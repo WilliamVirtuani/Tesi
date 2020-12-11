@@ -6,13 +6,16 @@
 int c = 0;
 long unsigned int countComparisons = 0;
 long unsigned int countMoves = 0;
+void printArray(int *A, int n);
 void swap(int *A, int i, int j);
 int cmp(int *A, int i, int j);
 int partition(int *A, int low, int high);
 void quicksort(int *A, int low, int high);
 int main()
 {
-  int n = 1000;
+  int n = 0;
+  printf("INSERIRE DIMENSIONE ARRAY: ");
+  scanf("%d", &n);
   int *A = calloc(n,sizeof(int));
   clock_t start = clock();
   while(c < N)
@@ -92,4 +95,13 @@ int partition(int *A, int low, int high)
     swap(A, j, pivot);
   }
     return j;
+  }
+
+void printArray(int *A, int n)
+  {
+    for(int i = 0; i < n; i++)
+    {
+      printf("%d\t", A[i]);
+    }
+    printf("\n");
   }

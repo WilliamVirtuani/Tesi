@@ -14,7 +14,9 @@ long int c = 0;
 
 int main()
 {
-  int n = 1000;
+  int n = 0;
+  printf("INSERIRE DIMENSIONE ARRAY: ");
+  scanf("%d", &n);
   int *A = calloc(n,sizeof(int));
   int left = 0;
   clock_t start = clock();

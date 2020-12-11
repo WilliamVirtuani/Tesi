@@ -2,16 +2,15 @@
 #include <time.h>
 #include <stdlib.h>
 
-void Swap(int *A, int i, int j); // Swap due elementi dell'array
-int ChoosePivot(int *A, int left, int right); // Ritorna la posizione iniziale del pivot
-int ReversePartition(int *A, int left, int right, int m); // Effettua la ripartizione dell'array e ritorna la posizione finale del pivot
-void BuildMaxHeap(int *A, int root, int right, int scale); // Costruisce una struttura (MAX)Heap a partire da un albero binario completo o quasi completo
-void BuildMinHeap(int *A, int root, int right, int scale); // Costruisce una struttura (MIN)Heap a partire da un albero binario completo o quasi completo
-void FixMaxHeap(int *A, int root, int right, int scale); // Risistema una struttura (MAX)Heap che non rispetta la condizione di heap sulla radice
-void FixMinHeap(int *A, int root, int right, int scale); // Risistema una struttura (MIN)Heap che non rispetta la condizione di heap sulla radice
-int SpecialMaxLeaf(int *A,int left, int right, int scale); // Ritorna la posizione della foglia più piccola in una struttura (MAX)heap
-int SpecialMinLeaf(int *A,int left, int right, int scale); // Ritorna la posizione della foglia più piccola in una struttura (MIN)heap
-void StampaArray(int *A, int left, int n); // Stampa Array
+void swap(int *A, int i, int j); // swap due elementi dell'array
+int reversePartition(int *A, int left, int right); // Effettua la ripartizione dell'array e ritorna la posizione finale del pivot
+void buildMaxHeap(int *A, int root, int right, int scale); // Costruisce una struttura (MAX)Heap a partire da un albero binario completo o quasi completo
+void buildMinHeap(int *A, int root, int right, int scale); // Costruisce una struttura (MIN)Heap a partire da un albero binario completo o quasi completo
+void fixMaxHeap(int *A, int root, int right, int scale); // Risistema una struttura (MAX)Heap che non rispetta la condizione di heap sulla radice
+void fixMinHeap(int *A, int root, int right, int scale); // Risistema una struttura (MIN)Heap che non rispetta la condizione di heap sulla radice
+int specialMaxLeaf(int *A,int left, int right, int scale); // Ritorna la posizione della foglia più piccola in una struttura (MAX)heap
+int specialMinLeaf(int *A,int left, int right, int scale); // Ritorna la posizione della foglia più piccola in una struttura (MIN)heap
+void printArray(int *A, int left, int n); // Stampa Array
 int cmp(int *A, int i, int j);
 long unsigned int countComparisons = 0;
 long unsigned int countMoves = 0;
@@ -20,7 +19,9 @@ long int c = 0;
 
 int main()
 {
-  int n = 1000;
+  int n = 0;
+  printf("INSERIRE DIMENSIONE ARRAY: ");
+  scanf("%d", &n);
   int *A = calloc(n,sizeof(n));
   int l = 0;
   int left = 0;
@@ -40,17 +41,16 @@ int main()
   left = 0;
   while(left < right)
   {
-  m = ChoosePivot(A, left, right);
-  pivot = ReversePartition(A, left, right, m);
+  pivot = reversePartition(A, left, right);
   pivotEntry = A[pivot];
   if(right+left > 2*pivot)
   {
-    BuildMaxHeap(A, left, pivot-1, left);
+    buildMaxHeap(A, left, pivot-1, left);
     A[pivot] = A[right];
     for(int j = 0; j <= pivot-left-1; j++)
     {
       A[right-j] = A[left];
-      l = SpecialMaxLeaf(A, left, pivot-1,left);
+      l = specialMaxLeaf(A, left, pivot-1,left);
       A[l]=A[right-j-1];
     }
     right = right-(pivot-left)-1;
@@ -58,12 +58,12 @@ int main()
   }
   else
   {
-    BuildMinHeap(A, pivot+1, right, pivot+1);
+    buildMinHeap(A, pivot+1, right, pivot+1);
     A[pivot] = A[left];
     for(int j = 0; j <= right-pivot-1; j++)
     {
       A[left+j] = A[pivot+1];
-      l = SpecialMinLeaf(A, pivot+1,right,pivot+1);
+      l = specialMinLeaf(A, pivot+1,right,pivot+1);
       A[l] = A[left+j+1];
     }
     left = left+(right-pivot)+1;
@@ -83,7 +83,7 @@ int main()
 }
 
 
-void Swap(int *A, int i, int j)
+void swap(int *A, int i, int j)
 {
   int buffer = 0;
   buffer = A[i];
@@ -93,13 +93,7 @@ void Swap(int *A, int i, int j)
 }
 
 
-int ChoosePivot(int *A, int left, int right)
-{
-  return left;
-}
-
-
-void StampaArray (int *A, int left, int n)
+void printArray (int *A, int left, int n)
 {
   for(int i = left; i < n; i++)
   {
@@ -108,29 +102,33 @@ void StampaArray (int *A, int left, int n)
 }
 
 
-int ReversePartition(int *A, int left, int right, int m)
+int reversePartition(int *A, int left, int right)
 {
-  while (left < right)
+  int pivot, i, j;
+  if(left < right)
   {
-    while(!(cmp(A, right, m)))
-    {
-      right--;
+    pivot = left;
+    i = left;
+    j = right;
+    while(i < j) {
+
+      while(cmp(A,i,pivot) && i <= right)
+        i++;
+
+      while(!(cmp(A,j,pivot)) && j >= left)
+        j--;
+
+      if(i < j) {
+        swap(A, i, j);
+      }
     }
-    while(cmp(A, left, m) && left < right)
-    {
-      left++;
-    }
-    if(left < right)
-    {
-      Swap(A, left, right);
-    }
+    swap(A, j, pivot);
   }
-  Swap(A, left, m);
-  return left;
+    return j;
 }
 
 
-void FixMaxHeap(int *A, int root, int right, int scale)
+void fixMaxHeap(int *A, int root, int right, int scale)
 {
   int max = 0;
   int sx = 0;
@@ -151,7 +149,7 @@ void FixMaxHeap(int *A, int root, int right, int scale)
     }
     if(max != root)
     {
-      Swap(A, root, max);
+      swap(A, root, max);
       root = max;
     }
     else break;
@@ -159,7 +157,7 @@ void FixMaxHeap(int *A, int root, int right, int scale)
 }
 
 
-void FixMinHeap(int *A, int root, int right, int scale)
+void fixMinHeap(int *A, int root, int right, int scale)
 {
   int max = 0;
   int sx = 0;
@@ -180,7 +178,7 @@ void FixMinHeap(int *A, int root, int right, int scale)
     }
     if(max != root)
     {
-      Swap(A, root, max);
+      swap(A, root, max);
       root = max;
     }
     else break;
@@ -188,29 +186,29 @@ void FixMinHeap(int *A, int root, int right, int scale)
 }
 
 
-void BuildMaxHeap(int *A, int root, int right, int scale)
+void buildMaxHeap(int *A, int root, int right, int scale)
 {
   int dim =(right-root)+1;
   int start =((dim/2)-1)+root;
   for(int i = start; i >= root; i--)
   {
-    FixMaxHeap(A, i, right, scale);
+    fixMaxHeap(A, i, right, scale);
   }
 }
 
 
-void BuildMinHeap(int *A, int root, int right, int scale)
+void buildMinHeap(int *A, int root, int right, int scale)
 {
   int dim =(right-root)+1;
   int start =((dim/2)-1)+root;
   for(int i = start; i >= root; i--)
   {
-    FixMinHeap(A, i, right, scale);
+    fixMinHeap(A, i, right, scale);
   }
 }
 
 
-int SpecialMaxLeaf(int *A,int left, int right, int scale)
+int specialMaxLeaf(int *A,int left, int right, int scale)
 {
   int i = left+1;
   if(i > right)
@@ -225,20 +223,20 @@ int SpecialMaxLeaf(int *A,int left, int right, int scale)
       i = i+1;
 
     }
-    Swap(A,i,(i+scale-1)/2);
+    swap(A,i,(i+scale-1)/2);
 
     i = (2*i+1)-scale;
   }
   if(i == right)
   {
-    Swap(A, (i+scale-1)/2,i);
+    swap(A, (i+scale-1)/2,i);
     i = (2*i+1)-scale;
   }
   return (i+scale-1)/2;
 }
 
 
-int SpecialMinLeaf(int *A,int left, int right, int scale)
+int specialMinLeaf(int *A,int left, int right, int scale)
 {
   int i = left+1;
   if(i > right)
@@ -251,12 +249,12 @@ int SpecialMinLeaf(int *A,int left, int right, int scale)
     {
       i = i+1;
     }
-    Swap(A, i, (i+scale-1)/2);
+    swap(A, i, (i+scale-1)/2);
     i = (2*i+1)-scale;
   }
   if(i == right)
   {
-    Swap(A, i, (i+scale-1)/2);
+    swap(A, i, (i+scale-1)/2);
     i = (2*i+1)-scale;
   }
 
